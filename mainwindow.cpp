@@ -20,22 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
   ui->plot->xAxis->setLabel("time");
   ui->plot->yAxis->setLabel("position");
 
-  //   // make left and bottom axes transfer their ranges to right and top axes:
-  //   connect(ui->plot->xAxis, SIGNAL(rangeChanged(QCPRange)),
-  //   ui->plot->xAxis2,
-  //           SLOT(setRange(QCPRange)));
-  //   connect(ui->plot->yAxis, SIGNAL(rangeChanged(QCPRange)),
-  //   ui->plot->yAxis2,
-  //           SLOT(setRange(QCPRange)));
-
-  //   // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-  //   connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimePlot()));
-  //   dataTimer.start(0); // Interval 0 means to refresh as fast as possible
-
-  //   ui->plot->xAxis->setRange(0, 100);
-  //   ui->plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom |
-  //                             QCP::iSelectPlottables);
-
   obj = new fastdds_thread(ui->plot);
   obj->start();
 }
