@@ -26,8 +26,6 @@ private slots:
 
   void on_clear_btn_clicked();
 
-  void on_value_changed();
-
 private:
   QVector<double> qv_x, qv_y;
 

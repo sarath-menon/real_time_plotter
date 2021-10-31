@@ -26,7 +26,7 @@ void fastdds_thread::run() { // Blocks until new data is available
 
     plot_->graph(0)->setData(qv_x, qv_y);
 
-    plot_->rescaleAxes();
+    // plot_->rescaleAxes();
     plot_->replot();
     plot_->update();
 
@@ -38,5 +38,4 @@ void fastdds_thread::run() { // Blocks until new data is available
 
 fastdds_thread::~fastdds_thread() { // Fastdds
   delete mocap_sub;
-  delete plot_;
 }

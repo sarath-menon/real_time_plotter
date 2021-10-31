@@ -9,11 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
   ui->plot->addGraph();
   ui->plot->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
   ui->plot->graph(0)->setLineStyle(QCPGraph::lsLine);
-  ui->plot->xAxis->setLabel("time");
+
   ui->plot->xAxis->setLabel("time");
   ui->plot->yAxis->setLabel("position");
-  ui->plot->xAxis->setRange(-5, 5);
-  ui->plot->yAxis->setRange(0, 10);
+
+  ui->plot->yAxis->setRange(-5, 5);
+  ui->plot->xAxis->setRange(0, 100);
 
   ui->plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom |
                             QCP::iSelectPlottables);
@@ -42,18 +43,13 @@ void MainWindow::cleardata() {
 
 void MainWindow::plot() {
   ui->plot->graph(0)->setData(qv_x, qv_y);
-  ui->plot->rescaleAxes();
+  //   ui->plot->rescaleAxes();
   ui->plot->replot();
   ui->plot->update();
 }
 
 void MainWindow::on_add_btn_clicked() {
   addpoint(sub::mocap_msg.pose.position.x, 5);
-  plot();
-}
-
-void MainWindow::on_value_changed() {
-  addpoint(ui->disp_1->value(), ui->disp_2->value());
   plot();
 }
 

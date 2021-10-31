@@ -31,9 +31,6 @@ private:
   int counter = 0;
   QCustomPlot *plot_;
   QVector<double> qv_x, qv_y;
-
-signals:
-  void valueChanged();
 };
 
 #endif // FASTDDS_THREAD_H
