@@ -34,6 +34,7 @@ private:
 
   // Fastdds objects
 private:
-  fastdds_thread *obj;
+  //   fastdds_thread *obj;
+  std::unique_ptr<fastdds_thread> obj;
 };
 #endif // MAINWINDOW_H

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <memory>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -19,13 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
   ui->plot->xAxis->setLabel("time");
   ui->plot->yAxis->setLabel("position");
 
-  obj = new fastdds_thread(ui->plot);
+  obj = std::make_unique<fastdds_thread>(ui->plot);
   obj->start();
 }
 
 MainWindow::~MainWindow() {
   delete ui;
-  delete obj;
+  //   delete obj;
   //   delete mocap_sub;
 }
 
