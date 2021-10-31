@@ -27,7 +27,11 @@ private slots:
   void on_clear_btn_clicked();
 
 private:
+  QTimer dataTimer;
   QVector<double> qv_x, qv_y;
+
+public slots:
+  void realtimePlot();
 
 private:
   Ui::MainWindow *ui;
