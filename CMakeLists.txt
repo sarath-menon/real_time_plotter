@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
         qcustomplot.h
         qcustomplot.cpp
         sub_variables.h
+        fastdds_thread.h
+        fastdds_thread.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

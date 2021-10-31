@@ -1,11 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "PositionPubSubTypes.h"
-#include "default_participant.h"
-#include "default_subscriber.h"
-#include "geometry_msgs/msgs/Position.h"
-#include "sub_variables.h"
+#include "fastdds_thread.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -30,6 +26,8 @@ private slots:
 
   void on_clear_btn_clicked();
 
+  void on_value_changed();
+
 private:
   QVector<double> qv_x, qv_y;
 
@@ -38,11 +36,13 @@ private:
 
   // Fastdds objects
 private:
-  // Create doamin participant
-  std::shared_ptr<DefaultParticipant> dp;
+  //   // Create doamin participant
+  //   std::shared_ptr<DefaultParticipant> dp;
 
-  // Motion capture data subscriber
-  // std::unique_ptr<DDSSubscriber> mocap_sub;
-  DDSSubscriber<idl_msg::MocapPubSubType, cpp_msg::Mocap> *mocap_sub;
+  //   // Motion capture data subscriber
+  //   // std::unique_ptr<DDSSubscriber> mocap_sub;
+  //   DDSSubscriber<idl_msg::MocapPubSubType, cpp_msg::Mocap> *mocap_sub;
+
+  fastdds_thread *obj;
 };
 #endif // MAINWINDOW_H

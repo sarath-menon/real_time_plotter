@@ -18,18 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
   ui->plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom |
                             QCP::iSelectPlottables);
 
-  // Fastdds
-  // Create domain participant
-  dp = std::make_shared<DefaultParticipant>(0, "godot_visualizer_qos");
+  obj = new fastdds_thread(ui->plot);
+  obj->start();
 
-  // Create  subscriber
-  mocap_sub = new DDSSubscriber(idl_msg::MocapPubSubType(), &sub::mocap_msg,
-                                "mocap_pose", dp->participant());
+  //   connect(obj, SIGNAL(valueChanged()), ui->plot, SLOT(on_value_changed()))
 }
 
 MainWindow::~MainWindow() {
   delete ui;
-  delete mocap_sub;
+  delete obj;
+  //   delete mocap_sub;
 }
 
 void MainWindow::addpoint(double x, double y) {
@@ -50,6 +48,11 @@ void MainWindow::plot() {
 }
 
 void MainWindow::on_add_btn_clicked() {
+  addpoint(sub::mocap_msg.pose.position.x, 5);
+  plot();
+}
+
+void MainWindow::on_value_changed() {
   addpoint(ui->disp_1->value(), ui->disp_2->value());
   plot();
 }
