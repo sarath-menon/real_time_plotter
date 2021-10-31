@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->y_plot->xAxis->setLabel("time");
   ui->z_plot->xAxis->setLabel("time");
 
-  obj = std::make_unique<fastdds_thread>(ui->x_plot);
+  obj = std::make_unique<fastdds_thread>(ui->x_plot, ui->y_plot, ui->z_plot);
   obj->start();
 }
 
@@ -48,4 +48,6 @@ MainWindow::~MainWindow() { delete ui; }
 // Clear all plots
 void MainWindow::on_clear_btn_clicked() {
   ui->x_plot->graph(0)->data()->clear();
+  ui->y_plot->graph(0)->data()->clear();
+  ui->z_plot->graph(0)->data()->clear();
 }

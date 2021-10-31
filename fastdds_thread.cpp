@@ -1,6 +1,7 @@
 #include "fastdds_thread.h"
 
-fastdds_thread::fastdds_thread(QCustomPlot *plot, QObject *parent)
+fastdds_thread::fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
+                               QCustomPlot *z_plot, QObject *parent)
     : QThread(parent) {
 
   // Fastdds ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
@@ -17,12 +18,25 @@ fastdds_thread::fastdds_thread(QCustomPlot *plot, QObject *parent)
 
   // Qt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  // set pointer to plot
-  plot_ = plot;
+  // set pointer to plots
+  x_plot_ = x_plot;
+  y_plot_ = y_plot;
+  z_plot_ = z_plot;
+
   // make left and bottom axes transfer their ranges to right and top axes:
-  connect(plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), plot_->xAxis2,
+  connect(x_plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), x_plot_->xAxis2,
           SLOT(setRange(QCPRange)));
-  connect(plot_->yAxis, SIGNAL(rangeChanged(QCPRange)), plot_->yAxis2,
+  connect(x_plot_->yAxis, SIGNAL(rangeChanged(QCPRange)), x_plot_->yAxis2,
+          SLOT(setRange(QCPRange)));
+
+  connect(y_plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), y_plot_->xAxis2,
+          SLOT(setRange(QCPRange)));
+  connect(y_plot_->yAxis, SIGNAL(rangeChanged(QCPRange)), y_plot_->yAxis2,
+          SLOT(setRange(QCPRange)));
+
+  connect(z_plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), z_plot_->xAxis2,
+          SLOT(setRange(QCPRange)));
+  connect(z_plot_->yAxis, SIGNAL(rangeChanged(QCPRange)), z_plot_->yAxis2,
           SLOT(setRange(QCPRange)));
 
   // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
@@ -54,17 +68,27 @@ void fastdds_thread::realtimePlot() {
   if (key - lastPointKey > 0.002) // at most add point every 2 ms
   {
     // add data to lines:
-    plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.x);
+    x_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.x);
+    y_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.y);
+    z_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.z);
 
     // rescale value (vertical) axis to fit the current data:
-    plot_->graph(0)->rescaleValueAxis();
-    // plot_->graph(1)->rescaleValueAxis(true);
+    x_plot_->graph(0)->rescaleValueAxis();
+    y_plot_->graph(0)->rescaleValueAxis();
+    z_plot_->graph(0)->rescaleValueAxis();
+
+    // x_plot_ ->>graph(1)->rescaleValueAxis(true);
     lastPointKey = key;
   }
 
   // make key axis range scroll with the data (at a constant range size of 8):
-  plot_->xAxis->setRange(key, 10, Qt::AlignRight);
-  plot_->replot();
+  x_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
+  y_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
+  z_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
+
+  x_plot_->replot();
+  y_plot_->replot();
+  z_plot_->replot();
 
   // calculate frames per second:
   static double lastFpsKey;
@@ -76,8 +100,8 @@ void fastdds_thread::realtimePlot() {
   //     ui->statusBar->showMessage(
   //         QString("%1 FPS, Total Data points: %2")
   //             .arg(frameCount / (key - lastFpsKey), 0, 'f', 0)
-  //             .arg(plot_->graph(0)->data()->size() +
-  //                  plot_->graph(1)->data()->size()),
+  //             .arg(x_plot_ ->>graph(0)->data()->size() +
+  //                  x_plot_ ->>graph(1)->data()->size()),
   //         0);
   //     lastFpsKey = key;
   //     frameCount = 0;

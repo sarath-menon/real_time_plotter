@@ -14,7 +14,8 @@ class fastdds_thread : public QThread {
   Q_OBJECT
 
 public:
-  explicit fastdds_thread(QCustomPlot *plot, QObject *parent = nullptr);
+  explicit fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
+                          QCustomPlot *z_plot, QObject *parent = nullptr);
   ~fastdds_thread();
 
   void run();
@@ -27,10 +28,17 @@ public:
   DDSSubscriber<idl_msg::MocapPubSubType, cpp_msg::Mocap> *mocap_sub;
 
 private:
-  // Pointer to plot
-  QCustomPlot *plot_;
+  // Pointer to plots
+  QCustomPlot *x_plot_;
+  QCustomPlot *y_plot_;
+  QCustomPlot *z_plot_;
+
   // To keep track of time
   QTimer dataTimer;
+
+  // parameters
+  // Scrolling spped [lower is more]
+  constexpr static int scroll_speed = 5;
 
 public slots:
   void realtimePlot();
