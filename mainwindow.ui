@@ -6,62 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1231</width>
+    <height>665</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCustomPlot" name="plot" native="true">
+   <widget class="QCustomPlot" name="x_plot" native="true">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>60</y>
-      <width>611</width>
-      <height>371</height>
+      <x>40</x>
+      <y>20</y>
+      <width>1151</width>
+      <height>141</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QDoubleSpinBox" name="disp_1">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>500</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QDoubleSpinBox" name="disp_2">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>500</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="add_btn">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>494</y>
-      <width>111</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Add</string>
     </property>
    </widget>
    <widget class="QPushButton" name="clear_btn">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>494</y>
+      <x>900</x>
+      <y>550</y>
       <width>111</width>
       <height>41</height>
      </rect>
@@ -70,13 +37,33 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QCustomPlot" name="x_plot_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>190</y>
+      <width>1151</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCustomPlot" name="x_plot_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>360</y>
+      <width>1151</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1231</width>
      <height>22</height>
     </rect>
    </property>

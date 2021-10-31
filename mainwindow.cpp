@@ -8,24 +8,26 @@ MainWindow::MainWindow(QWidget *parent)
 
   // Set plot properties
 
-  ui->plot->addGraph();
-  ui->plot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
+  ui->x_plot->addGraph();
+  ui->x_plot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
 
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   timeTicker->setTimeFormat("%h:%m:%s");
-  ui->plot->xAxis->setTicker(timeTicker);
-  ui->plot->axisRect()->setupFullAxesBox();
+  ui->x_plot->xAxis->setTicker(timeTicker);
+  ui->x_plot->axisRect()->setupFullAxesBox();
 
   // Set axes properties
-  ui->plot->yAxis->setRange(-distance_range, distance_range);
-  ui->plot->xAxis->setLabel("time");
-  ui->plot->yAxis->setLabel("position");
+  ui->x_plot->yAxis->setRange(-distance_range, distance_range);
+  ui->x_plot->xAxis->setLabel("time");
+  ui->x_plot->yAxis->setLabel("x_position");
 
-  obj = std::make_unique<fastdds_thread>(ui->plot);
+  obj = std::make_unique<fastdds_thread>(ui->x_plot);
   obj->start();
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
 // Clear all plots
-void MainWindow::on_clear_btn_clicked() { ui->plot->graph(0)->data()->clear(); }
+void MainWindow::on_clear_btn_clicked() {
+  ui->x_plot->graph(0)->data()->clear();
+}
