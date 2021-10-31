@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
   // Set plot properties
 
   ui->plot->addGraph();
-  ui->plot->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
-  ui->plot->graph(0)->setLineStyle(QCPGraph::lsLine);
+  ui->plot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
 
   QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
   timeTicker->setTimeFormat("%h:%m:%s");
