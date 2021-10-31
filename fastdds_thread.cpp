@@ -81,8 +81,6 @@ void fastdds_thread::realtimePlot() {
 
     // x_plot_ ->>graph(1)->rescaleValueAxis(true);
     last_time = cur_time;
-
-    qInfo() << "Updated data";
   }
 
   // make key axis range scroll with the data at ocnstant speed
