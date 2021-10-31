@@ -24,12 +24,12 @@ public:
   std::unique_ptr<DefaultParticipant> dp;
 
   // Motion capture data subscriber
-  // std::unique_ptr<DDSSubscriber> mocap_sub;
   DDSSubscriber<idl_msg::MocapPubSubType, cpp_msg::Mocap> *mocap_sub;
 
 private:
+  // Pointer to plot
   QCustomPlot *plot_;
-
+  // To keep track of time
   QTimer dataTimer;
 
 public slots:

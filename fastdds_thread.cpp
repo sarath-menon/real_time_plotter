@@ -30,6 +30,10 @@ fastdds_thread::fastdds_thread(QCustomPlot *plot, QObject *parent)
   dataTimer.start(0); // Interval 0 means to refresh as fast as possible
 }
 
+fastdds_thread::~fastdds_thread() { // Fastdds
+  delete mocap_sub;
+}
+
 void fastdds_thread::run() { // Blocks until new data is available
 
   for (;;) {
@@ -39,10 +43,6 @@ void fastdds_thread::run() { // Blocks until new data is available
 
   //   emit valueChanged();
 };
-
-fastdds_thread::~fastdds_thread() { // Fastdds
-  delete mocap_sub;
-}
 
 void fastdds_thread::realtimePlot() {
   static QTime time(QTime::currentTime());

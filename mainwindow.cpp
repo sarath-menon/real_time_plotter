@@ -15,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
   timeTicker->setTimeFormat("%h:%m:%s");
   ui->plot->xAxis->setTicker(timeTicker);
   ui->plot->axisRect()->setupFullAxesBox();
-  ui->plot->yAxis->setRange(-5, 5);
 
+  // Set axes properties
+  ui->plot->yAxis->setRange(-distance_range, distance_range);
   ui->plot->xAxis->setLabel("time");
   ui->plot->yAxis->setLabel("position");
 
@@ -26,4 +27,5 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() { delete ui; }
 
+// Clear all plots
 void MainWindow::on_clear_btn_clicked() { ui->plot->graph(0)->data()->clear(); }

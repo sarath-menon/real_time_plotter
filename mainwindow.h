@@ -25,7 +25,10 @@ private:
 
   // Fastdds objects
 private:
-  //   fastdds_thread *obj;
   std::unique_ptr<fastdds_thread> obj;
+
+  // Parameters
+  // Distance to cover in plots [meters]
+  constexpr static float distance_range{5};
 };
 #endif // MAINWINDOW_H
