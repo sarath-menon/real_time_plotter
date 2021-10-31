@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(real_time_plotter VERSION 0.1 LANGUAGES CXX)
 
@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         mainwindow.ui
         qcustomplot.h
         qcustomplot.cpp
+        sub_variables.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -46,7 +47,13 @@ else()
     endif()
 endif()
 
-target_link_libraries(real_time_plotter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport)
+add_subdirectory(lib)
+
+target_link_libraries(real_time_plotter PRIVATE 
+Qt${QT_VERSION_MAJOR}::Widgets 
+Qt${QT_VERSION_MAJOR}::PrintSupport
+comm_lib
+)
 
 set_target_properties(real_time_plotter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -57,3 +64,4 @@ set_target_properties(real_time_plotter PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(real_time_plotter)
 endif()
+
