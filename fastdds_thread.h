@@ -28,9 +28,8 @@ public:
   DDSSubscriber<idl_msg::MocapPubSubType, cpp_msg::Mocap> *mocap_sub;
 
 private:
-  int counter = 0;
   QCustomPlot *plot_;
-  QVector<double> qv_x, qv_y;
+
   QTimer dataTimer;
 
 public slots:

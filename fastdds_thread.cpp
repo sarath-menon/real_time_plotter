@@ -30,17 +30,6 @@ void fastdds_thread::run() { // Blocks until new data is available
   for (;;) {
     mocap_sub->listener->wait_for_data();
     qInfo() << " Received data";
-
-    // qv_y.append(sub::mocap_msg.pose.position.x);
-    // qv_x.append(counter);
-
-    // plot_->graph(0)->setData(qv_x, qv_y);
-
-    // // plot_->rescaleAxes();
-    // plot_->replot();
-    // plot_->update();
-
-    counter++;
   }
 
   //   emit valueChanged();
