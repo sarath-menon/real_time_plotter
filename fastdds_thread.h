@@ -31,6 +31,10 @@ private:
   int counter = 0;
   QCustomPlot *plot_;
   QVector<double> qv_x, qv_y;
+  QTimer dataTimer;
+
+public slots:
+  void realtimePlot();
 };
 
 #endif // FASTDDS_THREAD_H
