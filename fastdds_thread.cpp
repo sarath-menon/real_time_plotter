@@ -1,9 +1,12 @@
 #include "fastdds_thread.h"
 
 fastdds_thread::fastdds_thread(QCustomPlot *plot, QObject *parent)
-    : QThread(parent) { // Fastdds
+    : QThread(parent) {
+
+  // Fastdds ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
   // Create domain participant
-  dp = std::make_shared<DefaultParticipant>(0, "godot_visualizer_qos");
+  dp = std::make_unique<DefaultParticipant>(0, "godot_visualizer_qos");
 
   // Create  subscriber
   mocap_sub = new DDSSubscriber(idl_msg::MocapPubSubType(), &sub::mocap_msg,
@@ -12,8 +15,10 @@ fastdds_thread::fastdds_thread(QCustomPlot *plot, QObject *parent)
   // initialize  subscriberDefaultParticipant
   mocap_sub->init();
 
-  plot_ = plot;
+  // Qt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  // set pointer to plot
+  plot_ = plot;
   // make left and bottom axes transfer their ranges to right and top axes:
   connect(plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), plot_->xAxis2,
           SLOT(setRange(QCPRange)));

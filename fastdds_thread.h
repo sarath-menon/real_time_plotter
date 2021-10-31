@@ -21,7 +21,7 @@ public:
 
 public:
   // Create doamin participant
-  std::shared_ptr<DefaultParticipant> dp;
+  std::unique_ptr<DefaultParticipant> dp;
 
   // Motion capture data subscriber
   // std::unique_ptr<DDSSubscriber> mocap_sub;

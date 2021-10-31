@@ -24,35 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
   obj->start();
 }
 
-MainWindow::~MainWindow() {
-  delete ui;
-  //   delete obj;
-  //   delete mocap_sub;
-}
+MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::addpoint(double x, double y) {
-  qv_x.append(x);
-  qv_y.append(y);
-}
-
-void MainWindow::cleardata() {
-  qv_x.clear();
-  qv_y.clear();
-}
-
-void MainWindow::plot() {
-  ui->plot->graph(0)->setData(qv_x, qv_y);
-  //   ui->plot->rescaleAxes();
-  ui->plot->replot();
-  ui->plot->update();
-}
-
-void MainWindow::on_add_btn_clicked() {
-  addpoint(sub::mocap_msg.pose.position.x, 5);
-  plot();
-}
-
-void MainWindow::on_clear_btn_clicked() {
-  cleardata();
-  plot();
-}
+void MainWindow::on_clear_btn_clicked() { ui->plot->graph(0)->data()->clear(); }
