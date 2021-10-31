@@ -59,18 +59,20 @@ void fastdds_thread::run() { // Blocks until new data is available
 };
 
 void fastdds_thread::realtimePlot() {
-  static QTime time(QTime::currentTime());
-  static double lastPointKey = 0;
+  static double last_time = 0;
 
   // calculate time elapsed since start of demo, in seconds
-  double key = time.elapsed() / 1000.0;
 
-  if (key - lastPointKey > 0.002) // at most add point every 2 ms
+  QTime tm = QTime::currentTime();
+  double cur_time = tm.msecsSinceStartOfDay() / 1000.0;
+  double diff = cur_time - last_time;
+
+  if (diff > 0.002) // at most add point every 2 ms
   {
     // add data to lines:
-    x_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.x);
-    y_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.y);
-    z_plot_->graph(0)->addData(key, sub::mocap_msg.pose.position.z);
+    x_plot_->graph(0)->addData(cur_time, sub::mocap_msg.pose.position.x);
+    y_plot_->graph(0)->addData(cur_time, sub::mocap_msg.pose.position.y);
+    z_plot_->graph(0)->addData(cur_time, sub::mocap_msg.pose.position.z);
 
     // rescale value (vertical) axis to fit the current data:
     x_plot_->graph(0)->rescaleValueAxis();
@@ -78,13 +80,15 @@ void fastdds_thread::realtimePlot() {
     z_plot_->graph(0)->rescaleValueAxis();
 
     // x_plot_ ->>graph(1)->rescaleValueAxis(true);
-    lastPointKey = key;
+    last_time = cur_time;
+
+    qInfo() << "Updated data";
   }
 
-  // make key axis range scroll with the data (at a constant range size of 8):
-  x_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
-  y_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
-  z_plot_->xAxis->setRange(key, scroll_speed, Qt::AlignRight);
+  // make key axis range scroll with the data at ocnstant speed
+  x_plot_->xAxis->setRange(cur_time, scroll_speed, Qt::AlignRight);
+  y_plot_->xAxis->setRange(cur_time, scroll_speed, Qt::AlignRight);
+  z_plot_->xAxis->setRange(cur_time, scroll_speed, Qt::AlignRight);
 
   x_plot_->replot();
   y_plot_->replot();
