@@ -29,6 +29,8 @@ private:
 
   // Parameters
   // Distance to cover in plots [meters]
-  constexpr static float distance_range{5};
+  constexpr static float x_range{5};
+  constexpr static float y_range{5};
+  constexpr static float z_range{5};
 };
 #endif // MAINWINDOW_H

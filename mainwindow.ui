@@ -19,10 +19,10 @@
      <widget class="QCustomPlot" name="x_plot" native="true"/>
     </item>
     <item>
-     <widget class="QCustomPlot" name="x_plot_2" native="true"/>
+     <widget class="QCustomPlot" name="y_plot" native="true"/>
     </item>
     <item>
-     <widget class="QCustomPlot" name="x_plot_3" native="true"/>
+     <widget class="QCustomPlot" name="z_plot" native="true"/>
     </item>
     <item>
      <widget class="QPushButton" name="clear_btn">
