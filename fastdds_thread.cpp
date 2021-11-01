@@ -1,7 +1,8 @@
 #include "fastdds_thread.h"
 
 fastdds_thread::fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
-                               QCustomPlot *z_plot, QObject *parent)
+                               QCustomPlot *z_plot, QStatusBar *status_bar,
+                               QObject *parent)
     : QThread(parent) {
 
   // Fastdds ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
@@ -22,6 +23,8 @@ fastdds_thread::fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
   x_plot_ = x_plot;
   y_plot_ = y_plot;
   z_plot_ = z_plot;
+
+  status_bar_ = status_bar;
 
   // make left and bottom axes transfer their ranges to right and top axes:
   connect(x_plot_->xAxis, SIGNAL(rangeChanged(QCPRange)), x_plot_->xAxis2,
@@ -67,7 +70,7 @@ void fastdds_thread::realtimePlot() {
   double cur_time = tm.msecsSinceStartOfDay() / 1000.0;
   double diff = cur_time - last_time;
 
-  if (diff > 0.002) // at most add point every 2 ms
+  if (diff > refresh_time) // at most add point every 2 ms
   {
     // add data to lines:
     x_plot_->graph(0)->addData(cur_time, sub::mocap_msg.pose.position.x);
@@ -93,19 +96,17 @@ void fastdds_thread::realtimePlot() {
   z_plot_->replot();
 
   // calculate frames per second:
-  static double lastFpsKey;
-  static int frameCount;
+  static double lastFpsKey{};
+  static int frameCount{};
   ++frameCount;
 
-  //   if (key - lastFpsKey > 2) // average fps over 2 seconds
-  //   {
-  //     ui->statusBar->showMessage(
-  //         QString("%1 FPS, Total Data points: %2")
-  //             .arg(frameCount / (key - lastFpsKey), 0, 'f', 0)
-  //             .arg(x_plot_ ->>graph(0)->data()->size() +
-  //                  x_plot_ ->>graph(1)->data()->size()),
-  //         0);
-  //     lastFpsKey = key;
-  //     frameCount = 0;
-  //   }
+  if (cur_time - lastFpsKey > 2) // average fps over 2 seconds
+  {
+    status_bar_->showMessage(
+        QString("%1 FPS").arg(frameCount / (cur_time - lastFpsKey), 0, 'f', 0),
+        0);
+
+    lastFpsKey = cur_time;
+    frameCount = 0;
+  }
 }

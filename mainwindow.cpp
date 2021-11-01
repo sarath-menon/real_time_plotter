@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <memory>
+#include <qstatusbar.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -132,7 +133,11 @@ MainWindow::MainWindow(QWidget *parent)
   ui->z_plot->setBackground(plotGradient);
   ui->z_plot->axisRect()->setBackground(axisRectGradient);
 
-  obj = std::make_unique<fastdds_thread>(ui->x_plot, ui->y_plot, ui->z_plot);
+  //   // Set titlebar text
+  //   ui->statusbar->showMessage(QString("selva"));
+
+  obj = std::make_unique<fastdds_thread>(ui->x_plot, ui->y_plot, ui->z_plot,
+                                         ui->statusbar);
   obj->start();
 }
 

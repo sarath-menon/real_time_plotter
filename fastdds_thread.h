@@ -9,13 +9,15 @@
 #include "sub_variables.h"
 #include <QDebug>
 #include <QThread>
+#include <qstatusbar.h>
 
 class fastdds_thread : public QThread {
   Q_OBJECT
 
 public:
   explicit fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
-                          QCustomPlot *z_plot, QObject *parent = nullptr);
+                          QCustomPlot *z_plot, QStatusBar *status_bar,
+                          QObject *parent = nullptr);
   ~fastdds_thread();
 
   void run();
@@ -33,12 +35,16 @@ private:
   QCustomPlot *y_plot_;
   QCustomPlot *z_plot_;
 
+  QStatusBar *status_bar_;
+
   // To keep track of time
   QTimer dataTimer;
 
   // parameters
   // Scrolling spped [lower is more]
   constexpr static int scroll_speed = 5;
+  // scrren refresing [in seconds]
+  constexpr static float refresh_time = 0.040;
 
 public slots:
   void realtimePlot();
