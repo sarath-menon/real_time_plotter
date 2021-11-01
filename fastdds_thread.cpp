@@ -1,4 +1,6 @@
 #include "fastdds_thread.h"
+#include <qglobal.h>
+#include <qthread.h>
 
 fastdds_thread::fastdds_thread(QCustomPlot *x_plot, QCustomPlot *y_plot,
                                QCustomPlot *z_plot, QStatusBar *status_bar,
@@ -53,13 +55,16 @@ fastdds_thread::~fastdds_thread() { // Fastdds
 
 void fastdds_thread::run() { // Blocks until new data is available
 
-  for (;;) {
-    mocap_sub->listener->wait_for_data();
-    qInfo() << " Received data";
-  }
+  forever {
 
-  //   emit valueChanged();
-};
+    // Check if program close has been requeated. if so, leave loop
+    if (QThread::currentThread()->isInterruptionRequested()) {
+      return;
+    }
+
+    mocap_sub->listener->wait_for_data_for_ms(100);
+  };
+}
 
 void fastdds_thread::realtimePlot() {
   static double last_time = 0;

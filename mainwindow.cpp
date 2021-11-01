@@ -141,7 +141,13 @@ MainWindow::MainWindow(QWidget *parent)
   obj->start();
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  obj->quit();
+  obj->requestInterruption();
+
+  obj->wait();
+  delete ui;
+}
 
 // Clear all plots
 void MainWindow::on_clear_btn_clicked() {
