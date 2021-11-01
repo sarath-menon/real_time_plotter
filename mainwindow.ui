@@ -16,13 +16,22 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QCustomPlot" name="x_plot" native="true"/>
-    </item>
-    <item>
-     <widget class="QCustomPlot" name="y_plot" native="true"/>
-    </item>
-    <item>
-     <widget class="QCustomPlot" name="z_plot" native="true"/>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 0, 0);</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCustomPlot" name="x_plot" native="true"/>
+       </item>
+       <item>
+        <widget class="QCustomPlot" name="y_plot" native="true"/>
+       </item>
+       <item>
+        <widget class="QCustomPlot" name="z_plot" native="true"/>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="clear_btn">
