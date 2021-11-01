@@ -65,6 +65,10 @@
     </item>
     <item>
      <widget class="QPushButton" name="clear_btn">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 233, 0);
+</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
