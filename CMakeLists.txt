@@ -17,12 +17,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets PrintSupport REQUIRED)
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
-        mainwindow.h
         mainwindow.ui
-        qcustomplot.h
         qcustomplot.cpp
-        sub_variables.h
-        fastdds_thread.h
         fastdds_thread.cpp
 )
 
@@ -31,6 +27,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+
+target_include_directories(real_time_plotter PUBLIC include)
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET real_time_plotter APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
